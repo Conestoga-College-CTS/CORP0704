@@ -1,0 +1,122 @@
+[
+    {
+        "id": "ed4c58843c174f7c",
+        "type": "tab",
+        "label": "Flow 3 - Temperature Converter",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "0224fa5b53e59b45",
+        "type": "debug",
+        "z": "ed4c58843c174f7c",
+        "name": "msg._msgid",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "_msgid",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 910,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "f89293df318ee920",
+        "type": "function",
+        "z": "ed4c58843c174f7c",
+        "name": "Fahrenheit to Celsius Converter",
+        "func": "// Fahrenheit to Celsius conversion formula\nvar fahrenheit = msg.payload.value;\nvar celsius = (fahrenheit - 32) * 5 / 9;\n\n// Set the payload to the result\nmsg.payload = {\n    value: parseFloat(celsius.toFixed(2)),\n    unit: 'C',\n    timestamp: msg.payload.timestamp\n}\n\n// Return the message object to the next node\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 630,
+        "y": 340,
+        "wires": [
+            [
+                "0224fa5b53e59b45",
+                "ec675b64e34af181"
+            ]
+        ]
+    },
+    {
+        "id": "7c58154535f9cd96",
+        "type": "inject",
+        "z": "ed4c58843c174f7c",
+        "name": "Temperature",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 150,
+        "y": 180,
+        "wires": [
+            [
+                "75f9f25b0a93bb67"
+            ]
+        ]
+    },
+    {
+        "id": "ec675b64e34af181",
+        "type": "debug",
+        "z": "ed4c58843c174f7c",
+        "name": "Temp in deg.C",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 920,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "75f9f25b0a93bb67",
+        "type": "function",
+        "z": "ed4c58843c174f7c",
+        "name": "Random Number Generator in deg.F",
+        "func": "const randomValue = Math.floor(Math.random() * (120 - 40 + 1)) + 40;\n\nmsg.payload = {\n    value: parseFloat(randomValue),\n    unit: 'C',\n    timestamp: new Date().toISOString()\n}\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 290,
+        "y": 280,
+        "wires": [
+            [
+                "f89293df318ee920",
+                "c3de353ab74f549c"
+            ]
+        ]
+    },
+    {
+        "id": "c3de353ab74f549c",
+        "type": "debug",
+        "z": "ed4c58843c174f7c",
+        "name": "Temp in deg.F",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 580,
+        "y": 200,
+        "wires": []
+    }
+]

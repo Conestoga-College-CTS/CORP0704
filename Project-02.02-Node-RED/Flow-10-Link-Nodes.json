@@ -1,0 +1,364 @@
+[
+    {
+        "id": "4a98092ae360d0ba",
+        "type": "tab",
+        "label": "Flow 10: Link Nodes",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "4c26d3be6a264232",
+        "type": "inject",
+        "z": "4a98092ae360d0ba",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 140,
+        "y": 760,
+        "wires": [
+            [
+                "8ca3094a1b76dc98"
+            ]
+        ]
+    },
+    {
+        "id": "a0524b332b1feab0",
+        "type": "link call",
+        "z": "4a98092ae360d0ba",
+        "name": "",
+        "links": [
+            "bf6fd4b9c6efd1b5"
+        ],
+        "linkType": "static",
+        "timeout": "30",
+        "x": 580,
+        "y": 760,
+        "wires": [
+            [
+                "1920991923a7245f"
+            ]
+        ]
+    },
+    {
+        "id": "1920991923a7245f",
+        "type": "debug",
+        "z": "4a98092ae360d0ba",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 740,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "e45eb8dba830a792",
+        "type": "function",
+        "z": "4a98092ae360d0ba",
+        "name": "Add 10",
+        "func": "msg.payload = msg.payload + 10;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 260,
+        "wires": [
+            [
+                "88d6ccf6e9946a2a"
+            ]
+        ]
+    },
+    {
+        "id": "6645f91c79b0a660",
+        "type": "link in",
+        "z": "4a98092ae360d0ba",
+        "name": "Link In ADD",
+        "links": [],
+        "x": 205,
+        "y": 260,
+        "wires": [
+            [
+                "e45eb8dba830a792"
+            ]
+        ]
+    },
+    {
+        "id": "88d6ccf6e9946a2a",
+        "type": "link out",
+        "z": "4a98092ae360d0ba",
+        "name": "Link Out ADD",
+        "mode": "link",
+        "links": [
+            "1bed0c2258ce0d43",
+            "b24f7c193525b07b"
+        ],
+        "x": 525,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "b24f7c193525b07b",
+        "type": "link in",
+        "z": "4a98092ae360d0ba",
+        "name": "Link in DEBUG",
+        "links": [
+            "58ca84fa3de75eb6"
+        ],
+        "x": 665,
+        "y": 380,
+        "wires": [
+            [
+                "3105b0ca826f52ed"
+            ]
+        ]
+    },
+    {
+        "id": "3105b0ca826f52ed",
+        "type": "debug",
+        "z": "4a98092ae360d0ba",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 780,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "cc8a93e5f5424143",
+        "type": "function",
+        "z": "4a98092ae360d0ba",
+        "name": "Multipy by 2",
+        "func": "msg.payload = msg.payload * 2;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 380,
+        "wires": [
+            [
+                "58ca84fa3de75eb6"
+            ]
+        ]
+    },
+    {
+        "id": "1bed0c2258ce0d43",
+        "type": "link in",
+        "z": "4a98092ae360d0ba",
+        "name": "Link In MUL",
+        "links": [],
+        "x": 205,
+        "y": 380,
+        "wires": [
+            [
+                "cc8a93e5f5424143"
+            ]
+        ]
+    },
+    {
+        "id": "58ca84fa3de75eb6",
+        "type": "link out",
+        "z": "4a98092ae360d0ba",
+        "name": "Link Out MUL",
+        "mode": "link",
+        "links": [
+            "b24f7c193525b07b"
+        ],
+        "x": 525,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "5911929f05558110",
+        "type": "inject",
+        "z": "4a98092ae360d0ba",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 140,
+        "y": 540,
+        "wires": [
+            [
+                "0d6a38f490da599c"
+            ]
+        ]
+    },
+    {
+        "id": "0d6a38f490da599c",
+        "type": "function",
+        "z": "4a98092ae360d0ba",
+        "name": "Generate Random Value",
+        "func": "const randomValue = Math.floor(Math.random() * (120 - 40 + 1)) + 40;\nmsg.payload = randomValue;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 540,
+        "wires": [
+            [
+                "05c6c0c0a17d764c",
+                "2b63054395c9695e"
+            ]
+        ]
+    },
+    {
+        "id": "05c6c0c0a17d764c",
+        "type": "link out",
+        "z": "4a98092ae360d0ba",
+        "name": "Link Out Random Number",
+        "mode": "link",
+        "links": [
+            "6645f91c79b0a660"
+        ],
+        "x": 565,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "8ca3094a1b76dc98",
+        "type": "function",
+        "z": "4a98092ae360d0ba",
+        "name": "Generate Random Value",
+        "func": "const randomValue = Math.floor(Math.random() * (120 - 40 + 1)) + 40;\nmsg.payload = randomValue;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 760,
+        "wires": [
+            [
+                "a0524b332b1feab0",
+                "4fd6af05111244dc"
+            ]
+        ]
+    },
+    {
+        "id": "2ba86025e710fef0",
+        "type": "function",
+        "z": "4a98092ae360d0ba",
+        "name": "Square",
+        "func": "msg.payload = msg.payload * msg.payload;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 860,
+        "wires": [
+            [
+                "07593d3901cfc25f"
+            ]
+        ]
+    },
+    {
+        "id": "bf6fd4b9c6efd1b5",
+        "type": "link in",
+        "z": "4a98092ae360d0ba",
+        "name": "Link In SQUARE",
+        "links": [],
+        "x": 215,
+        "y": 860,
+        "wires": [
+            [
+                "2ba86025e710fef0"
+            ]
+        ]
+    },
+    {
+        "id": "07593d3901cfc25f",
+        "type": "link out",
+        "z": "4a98092ae360d0ba",
+        "name": "Link Out SQUARE",
+        "mode": "return",
+        "links": [],
+        "x": 535,
+        "y": 860,
+        "wires": []
+    },
+    {
+        "id": "2b63054395c9695e",
+        "type": "debug",
+        "z": "4a98092ae360d0ba",
+        "name": "debug 3 : Random Number",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 610,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "4fd6af05111244dc",
+        "type": "debug",
+        "z": "4a98092ae360d0ba",
+        "name": "debug 4 : Random Number",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 640,
+        "y": 660,
+        "wires": []
+    }
+]

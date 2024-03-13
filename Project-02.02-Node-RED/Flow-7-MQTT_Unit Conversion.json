@@ -1,0 +1,218 @@
+[
+    {
+        "id": "c7ce18966b1a67ab",
+        "type": "subflow",
+        "name": "Subflow 1 - Temperature Converter",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 120,
+                "y": 140,
+                "wires": [
+                    {
+                        "id": "3d3f05f82847c5c2"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 800,
+                "y": 280,
+                "wires": [
+                    {
+                        "id": "95c8577b0b2c111f",
+                        "port": 0
+                    },
+                    {
+                        "id": "ead939118a8d538b",
+                        "port": 0
+                    },
+                    {
+                        "id": "3d3f05f82847c5c2",
+                        "port": 2
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "meta": {},
+        "color": "#DDAA99"
+    },
+    {
+        "id": "f6ab385c8ff91783",
+        "type": "comment",
+        "z": "c7ce18966b1a67ab",
+        "name": "A function to convert temperature unit",
+        "info": "A function to convert temperature unit",
+        "x": 170,
+        "y": 20,
+        "wires": []
+    },
+    {
+        "id": "95c8577b0b2c111f",
+        "type": "function",
+        "z": "c7ce18966b1a67ab",
+        "name": "Fahrenheit to Celsius Converter",
+        "func": "// Fahrenheit to Celsius conversion formula\nvar fahrenheit = msg.payload.value;\nvar celsius = (fahrenheit - 32) * 5 / 9;\n\n// Set the payload to the result\nmsg.payload = {\n    value: parseFloat(celsius.toFixed(2)),\n    unit: 'C',\n    timestamp: msg.payload.timestamp\n}\n\n// Return the message object to the next node\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 530,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ead939118a8d538b",
+        "type": "function",
+        "z": "c7ce18966b1a67ab",
+        "name": "Kelvin to Celsius Converter",
+        "func": "var kelvin = msg.payload.value;\nvar celsius = kelvin - 273.15;\n\n// Set the payload to the result\nmsg.payload = {\n    value: parseFloat(celsius.toFixed(2)),\n    unit: 'C',\n    timestamp: msg.payload.timestamp\n}\n\n// Return the message object to the next node\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3d3f05f82847c5c2",
+        "type": "switch",
+        "z": "c7ce18966b1a67ab",
+        "name": "",
+        "property": "payload.unit",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "F",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "K",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "C",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 3,
+        "x": 270,
+        "y": 260,
+        "wires": [
+            [
+                "95c8577b0b2c111f"
+            ],
+            [
+                "ead939118a8d538b"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "b5248df0f456e61c",
+        "type": "tab",
+        "label": "Flow 7 - MQTT Unit Conversion",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "b2567ba78ccb3230",
+        "type": "mqtt in",
+        "z": "b5248df0f456e61c",
+        "name": "",
+        "topic": "+/temperature",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "e284a20b36344733",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 270,
+        "y": 280,
+        "wires": [
+            [
+                "8ff8a1c210edc56b"
+            ]
+        ]
+    },
+    {
+        "id": "8c1bf71f3d1b825c",
+        "type": "debug",
+        "z": "b5248df0f456e61c",
+        "name": "Data from IoT Device",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 860,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "8ff8a1c210edc56b",
+        "type": "subflow:c7ce18966b1a67ab",
+        "z": "b5248df0f456e61c",
+        "name": "",
+        "x": 540,
+        "y": 280,
+        "wires": [
+            [
+                "8c1bf71f3d1b825c"
+            ]
+        ]
+    },
+    {
+        "id": "e284a20b36344733",
+        "type": "mqtt-broker",
+        "name": "HiveMQ",
+        "broker": "172.17.0.2",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    }
+]

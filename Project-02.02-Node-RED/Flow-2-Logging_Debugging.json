@@ -1,0 +1,110 @@
+[
+    {
+        "id": "92520b0b586d8368",
+        "type": "tab",
+        "label": "Flow 2 - Function, Debugging",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "1b7ebd02abe5765f",
+        "type": "inject",
+        "z": "92520b0b586d8368",
+        "name": "Some Number",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "43",
+        "payloadType": "num",
+        "x": 120,
+        "y": 200,
+        "wires": [
+            [
+                "b8f37974b6215022",
+                "4a4a4c6e00d5035e"
+            ]
+        ]
+    },
+    {
+        "id": "b8f37974b6215022",
+        "type": "debug",
+        "z": "92520b0b586d8368",
+        "name": "debug: some number",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 400,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "4a4a4c6e00d5035e",
+        "type": "function",
+        "z": "92520b0b586d8368",
+        "name": "Increment Counter",
+        "func": "let count = flow.get('messageCount') || 0;\ncount = count + 1;\n\nflow.set('messageCount', count);\n\nmsg.payload = {\n    count: count\n}\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 300,
+        "wires": [
+            [
+                "5fe4f570aabfd86b"
+            ]
+        ]
+    },
+    {
+        "id": "5fe4f570aabfd86b",
+        "type": "function",
+        "z": "92520b0b586d8368",
+        "name": "Check Counter",
+        "func": "let count = flow.get('messageCount');\nlet maxCount = 5\nif (count >= maxCount) {\n    node.warn(\"Processed maxCount messages, resetting counter.\");\n    console.log(\"Processed maxCount messages, resetting counter.\");\n    flow.set('messageCount', 0);\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 300,
+        "wires": [
+            [
+                "df3f9d55a3bed504"
+            ]
+        ]
+    },
+    {
+        "id": "df3f9d55a3bed504",
+        "type": "debug",
+        "z": "92520b0b586d8368",
+        "name": "debug: message count",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload.count",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 870,
+        "y": 300,
+        "wires": []
+    }
+]

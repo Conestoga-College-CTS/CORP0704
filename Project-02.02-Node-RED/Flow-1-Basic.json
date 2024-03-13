@@ -1,0 +1,52 @@
+[
+    {
+        "id": "bf049da8c3527d3d",
+        "type": "tab",
+        "label": "Flow 1 - Basic",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "c79f87205a85894c",
+        "type": "inject",
+        "z": "bf049da8c3527d3d",
+        "name": "Some Number",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "43",
+        "payloadType": "num",
+        "x": 340,
+        "y": 200,
+        "wires": [
+            [
+                "341956d23b635ff7"
+            ]
+        ]
+    },
+    {
+        "id": "341956d23b635ff7",
+        "type": "debug",
+        "z": "bf049da8c3527d3d",
+        "name": "debug: some number",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 620,
+        "y": 200,
+        "wires": []
+    }
+]

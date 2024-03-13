@@ -1,0 +1,222 @@
+[
+    {
+        "id": "c7ce18966b1a67ab",
+        "type": "subflow",
+        "name": "Subflow 1 - Temperature Converter",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 120,
+                "y": 140,
+                "wires": [
+                    {
+                        "id": "3d3f05f82847c5c2"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 800,
+                "y": 280,
+                "wires": [
+                    {
+                        "id": "95c8577b0b2c111f",
+                        "port": 0
+                    },
+                    {
+                        "id": "ead939118a8d538b",
+                        "port": 0
+                    },
+                    {
+                        "id": "3d3f05f82847c5c2",
+                        "port": 2
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "meta": {},
+        "color": "#DDAA99"
+    },
+    {
+        "id": "f6ab385c8ff91783",
+        "type": "comment",
+        "z": "c7ce18966b1a67ab",
+        "name": "A function to convert temperature unit",
+        "info": "A function to convert temperature unit",
+        "x": 170,
+        "y": 20,
+        "wires": []
+    },
+    {
+        "id": "95c8577b0b2c111f",
+        "type": "function",
+        "z": "c7ce18966b1a67ab",
+        "name": "Fahrenheit to Celsius Converter",
+        "func": "// Fahrenheit to Celsius conversion formula\nvar fahrenheit = msg.payload.value;\nvar celsius = (fahrenheit - 32) * 5 / 9;\n\n// Set the payload to the result\nmsg.payload = {\n    value: parseFloat(celsius.toFixed(2)),\n    unit: 'C',\n    timestamp: msg.payload.timestamp\n}\n\n// Return the message object to the next node\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 530,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ead939118a8d538b",
+        "type": "function",
+        "z": "c7ce18966b1a67ab",
+        "name": "Kelvin to Celsius Converter",
+        "func": "var kelvin = msg.payload.value;\nvar celsius = kelvin - 273.15;\n\n// Set the payload to the result\nmsg.payload = {\n    value: parseFloat(celsius.toFixed(2)),\n    unit: 'C',\n    timestamp: msg.payload.timestamp\n}\n\n// Return the message object to the next node\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3d3f05f82847c5c2",
+        "type": "switch",
+        "z": "c7ce18966b1a67ab",
+        "name": "",
+        "property": "payload.unit",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "F",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "K",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "C",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 3,
+        "x": 270,
+        "y": 260,
+        "wires": [
+            [
+                "95c8577b0b2c111f"
+            ],
+            [
+                "ead939118a8d538b"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "2f3a2e0307e4b7f2",
+        "type": "tab",
+        "label": "Flow 5 - Using Subflow",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "336228a5e66317f4",
+        "type": "subflow:c7ce18966b1a67ab",
+        "z": "2f3a2e0307e4b7f2",
+        "name": "",
+        "x": 580,
+        "y": 240,
+        "wires": [
+            [
+                "65e362b52a2eab34"
+            ]
+        ]
+    },
+    {
+        "id": "65e362b52a2eab34",
+        "type": "debug",
+        "z": "2f3a2e0307e4b7f2",
+        "name": "Output Temperature",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 940,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "f799d5769a666479",
+        "type": "inject",
+        "z": "2f3a2e0307e4b7f2",
+        "name": "Temperature",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 170,
+        "y": 80,
+        "wires": [
+            [
+                "ed8c41f3514d7c32"
+            ]
+        ]
+    },
+    {
+        "id": "ed8c41f3514d7c32",
+        "type": "function",
+        "z": "2f3a2e0307e4b7f2",
+        "name": "Random Number Generator",
+        "func": "// Generate a random number between - 50 and 50\nconst randomTemperature = Math.floor(Math.random() * (100 - 50 + 1)) + 50;\n\n// Randomly choose a temperature unit (C, F, or K)\nconst units = [\"C\", \"F\", \"K\"];\nconst randomUnit = units[Math.floor(Math.random() * units.length)];\n\n// Set the temperature value and unit to the payload\nmsg.payload = {\n    value: randomTemperature,\n    unit: randomUnit,\n    timestamp: new Date().toISOString()\n};\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 240,
+        "y": 200,
+        "wires": [
+            [
+                "9a5a6c7ee146558f",
+                "336228a5e66317f4"
+            ]
+        ]
+    },
+    {
+        "id": "9a5a6c7ee146558f",
+        "type": "debug",
+        "z": "2f3a2e0307e4b7f2",
+        "name": "Input Temperature",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 510,
+        "y": 140,
+        "wires": []
+    }
+]

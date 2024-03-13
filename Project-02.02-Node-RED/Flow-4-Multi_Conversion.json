@@ -1,0 +1,165 @@
+[
+    {
+        "id": "6cc7f37e1ded7b10",
+        "type": "tab",
+        "label": "Flow 4 - Multi Conversion",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "177def63329c9e5f",
+        "type": "function",
+        "z": "6cc7f37e1ded7b10",
+        "name": "Fahrenheit to Celsius Converter",
+        "func": "// Fahrenheit to Celsius conversion formula\nvar fahrenheit = msg.payload.value;\nvar celsius = (fahrenheit - 32) * 5 / 9;\n\n// Set the payload to the result\nmsg.payload = {\n    value: parseFloat(celsius.toFixed(2)),\n    unit: 'C',\n    timestamp: msg.payload.timestamp\n}\n\n// Return the message object to the next node\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 710,
+        "y": 160,
+        "wires": [
+            [
+                "8a605c531d48a117"
+            ]
+        ]
+    },
+    {
+        "id": "8a605c531d48a117",
+        "type": "debug",
+        "z": "6cc7f37e1ded7b10",
+        "name": "Output Temperature",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1020,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "dafaafef8beffa43",
+        "type": "function",
+        "z": "6cc7f37e1ded7b10",
+        "name": "Kelvin to Celsius Converter",
+        "func": "var kelvin = msg.payload.value;\nvar celsius = kelvin - 273.15;\n\n// Set the payload to the result\nmsg.payload = {\n    value: parseFloat(celsius.toFixed(2)),\n    unit: 'C',\n    timestamp: msg.payload.timestamp\n}\n\n// Return the message object to the next node\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 700,
+        "y": 240,
+        "wires": [
+            [
+                "8a605c531d48a117"
+            ]
+        ]
+    },
+    {
+        "id": "488f77c5aef11067",
+        "type": "inject",
+        "z": "6cc7f37e1ded7b10",
+        "name": "Temperature",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 130,
+        "y": 100,
+        "wires": [
+            [
+                "496ed80d8861803b"
+            ]
+        ]
+    },
+    {
+        "id": "496ed80d8861803b",
+        "type": "function",
+        "z": "6cc7f37e1ded7b10",
+        "name": "Random Number Generator",
+        "func": "// Generate a random number between - 50 and 50\nconst randomTemperature = Math.floor(Math.random() * (100 - 50 + 1)) + 50;\n\n// Randomly choose a temperature unit (C, F, or K)\nconst units = [\"C\", \"F\", \"K\"];\nconst randomUnit = units[Math.floor(Math.random() * units.length)];\n\n// Set the temperature value and unit to the payload\nmsg.payload = {\n    value: randomTemperature,\n    unit: randomUnit,\n    timestamp: new Date().toISOString()\n};\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 200,
+        "y": 220,
+        "wires": [
+            [
+                "9ff91cb07168555e",
+                "e8691511180aaf3a"
+            ]
+        ]
+    },
+    {
+        "id": "9ff91cb07168555e",
+        "type": "switch",
+        "z": "6cc7f37e1ded7b10",
+        "name": "",
+        "property": "payload.unit",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "F",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "K",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "C",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 3,
+        "x": 450,
+        "y": 300,
+        "wires": [
+            [
+                "177def63329c9e5f"
+            ],
+            [
+                "dafaafef8beffa43"
+            ],
+            [
+                "8a605c531d48a117"
+            ]
+        ]
+    },
+    {
+        "id": "e8691511180aaf3a",
+        "type": "debug",
+        "z": "6cc7f37e1ded7b10",
+        "name": "Input Temperature",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 450,
+        "y": 100,
+        "wires": []
+    }
+]
