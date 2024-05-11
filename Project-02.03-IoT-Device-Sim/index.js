@@ -34,6 +34,9 @@ function simulateDevice(deviceId) {
   };
 
   const client = mqtt.connect(config.mqttServer);
+  client.on('error', (error) => {
+    console.error(`Device ${deviceId} error: ${error}`);
+  });
   client.on('connect', () => {
     const topic = config.topicBase.replace('device_id', deviceId);
     client.publish(topic, JSON.stringify(payload), () => {

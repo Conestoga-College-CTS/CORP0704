@@ -52,63 +52,68 @@
     - Add function to library
 
 
-9. Database Integraton - Save MQTT data to 
-
+8. Database Integraton - Save MQTT data to 
+  
     a. Get MySQL database as docker container
-            
-    ```
-        docker run --name mysqldb -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=iotdb -d mysql:latest
-    ```
+          
+      ```
+      docker run --name mysqldb -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=iotdb -d mysql:latest
+      ```
 
     b. Create a table in database
 
     ```
-        docker cp table.sql mysqldb:/table.sql
+    docker cp table.sql mysqldb:/table.sql
 
-        docker exec -it mysqldb mysql -uroot -ppassword < /create_table.sql
+    docker exec -it mysqldb mysql -uroot -ppassword < /create_table.sql
 
-        docker exec -it mysqldb bash
+    docker exec -it mysqldb bash
 
-        mysql -uroot -ppassword < /table.sql
+    mysql -uroot -ppassword < /table.sql
 
-        mysql -uroot -ppassword -e "USE iotdb; SHOW TABLES"
+    mysql -uroot -ppassword -e "USE iotdb; SHOW TABLES"
     ```
 
     c. Install Node-RED mysql plugin inside node-red docker
     
     ```
-        docker exec -it nr npm install node-red-node-mysql
+    docker exec -it nr npm install node-red-node-mysql
     ```
 
-    d. Import Flow-9-MQTT_to_DB.json to Node-RED workspace.
+    d. Restart node-RED
+    ```
+    docker restart nr
+    ```
 
-    e. Check data in database table
+    e. Import Flow-9-MQTT_to_DB.json to Node-RED workspace.
+
+    f. Check data in database table
 
     ```
-        docker exec -it mysqldb mysql -uroot -ppassword -e "USE iotdb; select * from sensor_data where device_id = 'device_1'"
+    docker exec -it mysqldb mysql -uroot -ppassword -e "USE iotdb; select * from sensor_data where device_id = 'device_1'"
     ```
 
 10. Dashboard
 
     a. Install Node-RED dashboard
             
-    ```
-        docker exec -it nr npm install node-red-dashboard
-    ```
+      ```
+      docker exec -it nr npm install node-red-dashboard
+      ```
 
     b. Create a Trend Prepare function
 
-    ```
-    let topicParts = msg.topic.split('/');
-    let deviceId = topicParts[0];
-    console.log(msg);
+      ```
+      let topicParts = msg.topic.split('/');
+      let deviceId = topicParts[0];
+      console.log(msg);
 
-    msg.timestamp = msg.payload.timestamp;
-    msg.payload = msg.payload.value;
+      msg.timestamp = msg.payload.timestamp;
+      msg.payload = msg.payload.value;
 
-    msg.topic = deviceId;
+      msg.topic = deviceId;
 
-    return msg;
-    ```
+      return msg;
+      ```
 
     c. View dashboard from : http://localhost:1880/ui
