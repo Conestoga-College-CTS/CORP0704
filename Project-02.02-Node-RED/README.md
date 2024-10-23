@@ -14,6 +14,12 @@
     ```
     npm install -g node-red
     ```
+    
+    After installing node-red as a global package start node-red server by running:
+
+    ```
+    node-red
+    ```
 
 2. Creating Your First Flow 
     
