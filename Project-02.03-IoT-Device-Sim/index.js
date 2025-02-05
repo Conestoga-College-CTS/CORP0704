@@ -52,3 +52,4 @@ schedule.scheduleJob(config.publishInterval, () => {
     simulateDevice(`device_${i}`);
   }
 });
+

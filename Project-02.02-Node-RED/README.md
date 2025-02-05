@@ -18,7 +18,7 @@
     After installing node-red as a global package start node-red server by running:
 
     ```
-    node-red
+    npx node-red
     ```
 
 2. Creating Your First Flow 
@@ -98,8 +98,12 @@
     ```
     docker exec -it mysqldb mysql -uroot -ppassword -e "USE iotdb; select * from sensor_data where device_id = 'device_1'"
     ```
+10. LinkNode
 
-10. Dashboard
+    Import Flow-10-Link-Nodes.json to Node-RED workspace.
+
+
+11. Dashboard
 
     a. Install Node-RED dashboard
             
@@ -107,7 +111,7 @@
       docker exec -it nr npm install node-red-dashboard
       ```
 
-    b. Create a Trend Prepare function
+    b. Create a function to prepare data for a chart
 
       ```
       let topicParts = msg.topic.split('/');
@@ -122,4 +126,6 @@
       return msg;
       ```
 
-    c. View dashboard from : http://localhost:1880/ui
+    c. Add the chart node from Dashboard section to the flow, and wire the output of above function to its input.
+
+    d. View dashboard from : http://localhost:1880/ui
